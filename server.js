@@ -5,6 +5,10 @@ const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
 
+const config = require("config");
+const dotenv = require("dotenv");
+
+dotenv.config();
 //connect to the Database
 // connectDB();
 
@@ -17,14 +21,14 @@ const PORT = process.env.PORT || 5000;
 // app.use("/api/users", require("./routes/users"));
 // app.use("/api/auth", require("./routes/auth"));
 // app.use("/api/playlists", require("./routes/playlists"));
-
-const client_id = "5b39223534eb4efbb6e15d082fd1ae77"; // Your client id
-const client_secret = "1d093656dd9f4cf7a31b475a7765b921"; // Your secret
+console.log(process.env.REACT_APP_CLIENT_ID);
+const client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
+const client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
 const redirect_uri = "http://localhost:5000/callback"; // Your redirect uri
 
 // The following code is adapted from the Spotify API documentation
 
-//------------------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------
 
 /**
  * Generates a random string containing numbers and letters
