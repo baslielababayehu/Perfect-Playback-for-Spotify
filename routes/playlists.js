@@ -33,7 +33,7 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, phone, type } = req.body;
+    const { name } = req.body;
 
     try {
       const newPlaylist = new Playlist({
@@ -43,7 +43,7 @@ router.post(
       });
       const playlist = await newPlaylist.save();
 
-      res.json(contact);
+      res.json(playlist);
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server Error");
@@ -54,15 +54,57 @@ router.post(
 //@route    PUT api/playlist/:id
 //@desc     update playlist
 //@access   private
-router.put("/", (req, res) => {
-  res.send("update playlist");
+router.put("/", auth, async (req, res) => {
+  const { name } = req.body;
+
+  //build a playlist obect
+  const playlistFields = {};
+  if (name) playlistFields.name = name;
+
+  try {
+    let playlist = await Playlist.findById(req.params.id);
+
+    if (!playlist) return res.status(404).json({ msg: "playlist not found" });
+
+    //make sure user owns playlist
+    if (playlist.user.toString !== req.user.id) {
+      return res.status(401).json({ msg: "Not authoeized" });
+    }
+
+    playlist = await Playlist.findByIdAndUpdate(
+      req.params.id,
+      { $set: playlistFields },
+      { new: true }
+    );
+
+    res.json(contact);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 //@route    DELETE api/playlist/:id
 //@desc     delete playlist
 //@access   private
-router.delete("/", (req, res) => {
-  res.send("delete playlist");
+router.delete("/", auth, async (req, res) => {
+  try {
+    let playlist = await Playlist.findById(req.params.id);
+
+    if (!playlist) return res.status(404).json({ msg: "playlist not found" });
+
+    //make sure user owns playlist
+    if (playlist.user.toString !== req.user.id) {
+      return res.status(401).json({ msg: "Not authoeized" });
+    }
+
+    await Playlist.findByIdAndRemove(reqs.params.id);
+
+    res.json(contact);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server Error");
+  }
 });
 
 module.exports = router;

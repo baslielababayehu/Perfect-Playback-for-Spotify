@@ -1,0 +1,59 @@
+@import url("https://fonts.googleapis.com/css?family=Proxima+Nova&display=swap");
+
+.home-background {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: #191414;
+  /* background-image: linear-gradient(rgb(26, 30, 34) 0%, rgb(36, 41, 46) 100%); */
+  color: rgb(246, 248, 250);
+  height: 100vh;
+}
+
+.home-container {
+  text-align: center;
+  margin-top: -10rem;
+}
+
+.spotify-icon-home {
+  color: #1db954;
+  font-size: 4.7rem;
+}
+
+.home-header {
+  font-family: "Proxima Nova";
+  color: rgb(246, 248, 250);
+  font-size: 2.5rem;
+  margin: 1.5rem 0;
+  margin-bottom: 2rem;
+}
+
+.home-input {
+  font-family: "Proxima Nova";
+  letter-spacing: 2px;
+  color: white;
+  background-color: rgb(53, 55, 56);
+  padding: 1rem;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  font-size: 2rem;
+  text-align: center;
+  width: 28rem;
+  margin-bottom: 15px;
+}
+
+/* Resposive */
+@media screen and (max-width: 500px) {
+  .home-input {
+    width: 19rem;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+  }
+
+  .home-header {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,15 @@
+.navbar-background {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: flex-end;
+  justify-content: flex-start;
+  background-color: #191414;
+  /* background-image: linear-gradient(white 0%, #1db954);
+  color: rgb(246, 248, 250); */
+  /* height: 100vh; */
+}
+.ul {
+  display: inline-block;
+}
