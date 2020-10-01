@@ -72,7 +72,7 @@ const generateRandomString = function (length) {
 
 const stateKey = "spotify_auth_state";
 
-app.use(express.static("../client/public")).use(cors()).use(cookieParser());
+app.use(express.static("/client/public")).use(cors()).use(cookieParser());
 
 app.get("/login", function (req, res) {
   let state = generateRandomString(16);
