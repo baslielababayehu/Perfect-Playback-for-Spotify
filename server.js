@@ -26,9 +26,19 @@ const PORT = process.env.PORT || 5000;
 // app.use("/api/auth", require("./routes/auth"));
 // app.use("/api/playlists", require("./routes/playlists"));
 console.log(process.env.REACT_APP_CLIENT_ID);
-const client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
-const client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
-const redirect_uri = "http://localhost:5000/callback"; // Your redirect uri
+const client_id = process.env.REACT_APP_CLIENT_ID; //  client id
+const client_secret = process.env.REACT_APP_CLIENT_SECRET; // client secret
+
+// const getRedirectURI = () => {
+let redirect_uri = "";
+if (process.env.NODE_ENV === "production") {
+  redirect_uri = "/callback"; // redirect uri for production
+} else {
+  redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
+}
+// };
+// getRedirectURI()
+console.log(redirect_uri);
 
 // Serve static assets in production
 if (process.env.NODE_ENV === "production") {
@@ -40,7 +50,7 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-// The following code is adapted from the Spotify API documentation
+// The following code below is adapted from the Spotify API documentation
 
 //----------------------------------------------------------------------------------
 
@@ -92,12 +102,21 @@ app.get("/callback", function async(req, res) {
   let storedState = req.cookies ? req.cookies[stateKey] : null;
 
   if (state === null || state !== storedState) {
-    res.redirect(
-      "http://localhost:3006/#" +
-        querystring.stringify({
-          error: "state_mismatch",
-        })
-    );
+    if (process.env.NODE_ENV === "production") {
+      res.redirect(
+        "/#" +
+          querystring.stringify({
+            error: "state_mismatch",
+          })
+      );
+    } else {
+      res.redirect(
+        "http://localhost:3006/#" +
+          querystring.stringify({
+            error: "state_mismatch",
+          })
+      );
+    }
   } else {
     res.clearCookie(stateKey);
     const authOptions = {
@@ -132,20 +151,39 @@ app.get("/callback", function async(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect(
-          "http://localhost:3006/home/#" +
-            querystring.stringify({
-              access_token: access_token,
-              refresh_token: refresh_token,
-            })
-        );
+        if (process.env.NODE_ENV === "production") {
+          res.redirect(
+            "/home/#" +
+              querystring.stringify({
+                access_token: access_token,
+                refresh_token: refresh_token,
+              })
+          );
+        } else {
+          res.redirect(
+            "http://localhost:3006/home/#" +
+              querystring.stringify({
+                access_token: access_token,
+                refresh_token: refresh_token,
+              })
+          );
+        }
       } else {
-        res.redirect(
-          "/#" +
-            querystring.stringify({
-              error: "invalid_token",
-            })
-        );
+        if (process.env.NODE_ENV === "production") {
+          res.redirect(
+            "/#" +
+              querystring.stringify({
+                error: "invalid_token",
+              })
+          );
+        } else {
+          res.redirect(
+            "http://localhost:3006/#" +
+              querystring.stringify({
+                error: "invalid_token",
+              })
+          );
+        }
       }
     });
   }

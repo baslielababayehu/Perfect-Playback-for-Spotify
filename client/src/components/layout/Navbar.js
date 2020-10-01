@@ -3,9 +3,19 @@ import { Link } from "react-router-dom";
 import { FaSpotify } from "react-icons/fa";
 import "./Navbar.css";
 import { Button } from "@material-ui/core";
+import axios from "axios";
 
 export const Navbar = (props) => {
   // console.log(props);
+  const goLogin = () => {
+    const currentURL = window.location.href;
+    console.log(window.location.href === "http://localhost:3006/");
+    if (window.location.href === "http://localhost:3006/") {
+      window.location.href = "http://localhost:5000/login";
+    } else {
+      window.location.href = currentURL + "/login";
+    }
+  };
   return (
     <div className="text-white pr-3" style={{ backgroundColor: "#221f1f" }}>
       <div className="row p-0 m-0 pt-2">
@@ -50,7 +60,8 @@ export const Navbar = (props) => {
             <div className="row">
               <div className="col-6">
                 <a
-                  href="http://localhost:5000/login"
+                  // href="http://localhost:5000/login"
+                  onClick={goLogin}
                   className="btn btn-block btn-secondary btn-sm"
                   style={{ backgroundColor: "#1DB954" }}
                 >

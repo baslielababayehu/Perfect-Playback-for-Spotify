@@ -1,4 +1,3 @@
 {
-  "mongoURI": "mongodb+srv://bababayehu:bababayehu@perfectplayback.dxsex.mongodb.net/<dbname>?retryWrites=true&w=majority",
   "jwtSecret": "secret"
 }
