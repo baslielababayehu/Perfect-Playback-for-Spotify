@@ -11,6 +11,9 @@ const dotenv = require("dotenv");
 const path = require("path");
 
 dotenv.config();
+const app = express();
+const PORT = process.env.PORT || 5000;
+
 //connect to the Database
 // connectDB();
 
@@ -37,8 +40,6 @@ if (process.env.NODE_ENV === "production") {
   );
 }
 
-const PORT = process.env.PORT || 5000;
-
 // The following code is adapted from the Spotify API documentation
 
 //----------------------------------------------------------------------------------
@@ -60,8 +61,6 @@ const generateRandomString = function (length) {
 };
 
 const stateKey = "spotify_auth_state";
-
-const app = express();
 
 app.use(express.static("../client/public")).use(cors()).use(cookieParser());
 
@@ -178,6 +177,6 @@ app.get("/refresh_token", function (req, res) {
     }
   });
 });
-app.listen(5000);
+app.listen(PORT);
 
 console.log("Listening on 8888");
