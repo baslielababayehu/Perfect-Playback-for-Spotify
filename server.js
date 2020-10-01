@@ -8,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const config = require("config");
 const dotenv = require("dotenv");
 
+const path = require("path");
+
 dotenv.config();
 //connect to the Database
 // connectDB();
@@ -15,7 +17,6 @@ dotenv.config();
 //init Middleware
 // app.use(express.json({ extended: false }));
 
-const PORT = process.env.PORT || 5000;
 // app.get("/", (req, res) => res.json({ msg: "Hello World" }));
 
 // app.use("/api/users", require("./routes/users"));
@@ -25,6 +26,18 @@ console.log(process.env.REACT_APP_CLIENT_ID);
 const client_id = process.env.REACT_APP_CLIENT_ID; // Your client id
 const client_secret = process.env.REACT_APP_CLIENT_SECRET; // Your secret
 const redirect_uri = "http://localhost:5000/callback"; // Your redirect uri
+
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+  app.use(express.static("client/build"));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  );
+}
+
+const PORT = process.env.PORT || 5000;
 
 // The following code is adapted from the Spotify API documentation
 
@@ -48,7 +61,6 @@ const generateRandomString = function (length) {
 
 const stateKey = "spotify_auth_state";
 
-// const app = express();
 const app = express();
 
 app.use(express.static("../client/public")).use(cors()).use(cookieParser());
