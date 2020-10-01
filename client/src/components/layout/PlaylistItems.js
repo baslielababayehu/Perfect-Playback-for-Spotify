@@ -1,7 +1,7 @@
 import React from "react";
 
 export const PlaylistItems = ({ track }) => {
-  return <div>{track}</div>;
+  return <div className="text-white">{track}</div>;
 };
 
 export default PlaylistItems;
