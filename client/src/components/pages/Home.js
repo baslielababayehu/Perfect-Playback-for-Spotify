@@ -7,26 +7,6 @@ import axios from "axios";
 import "./Home.css";
 
 export const Home = (props) => {
-  // const [keyword, setKeyword] = useState("");
-  // const [access_token, setAccess_token] = useState(props.access_token);
-  // const [loggedIn, setLoggedIn] = useState(false);
-
-  // const handleChange = (name) => (e) => {
-  //   setKeyword({ ...keyword, [name]: e.target.value });
-  // };
-  // const onEnter = (e) => {
-  //   if (e.key === "Enter") {
-  //     console.log(e.target.value);
-  //     if (access_token) {
-  //       props.captureKeyword();
-  //     } else {
-  //       console.log("please Log in First");
-  //     }
-  //     // props.redirect();
-
-  // console.log("props");
-  // };
-  // };
   return (
     <div className="main-container p-0 m-0">
       <div className="row p-0 m-0">
@@ -42,6 +22,7 @@ export const Home = (props) => {
             <div className="home-container">
               <FaSpotify className="spotify-icon-home" />
               <div className="home-header">Search Your Playlist Idea</div>
+
               <input
                 id="home-input"
                 type="text"
@@ -51,6 +32,10 @@ export const Home = (props) => {
                 // onChange={handleChange}
                 onKeyDown={props.onEnter}
               />
+              <p className="text-white" id="description">
+                Perfect Playback will find the most relevant tracks by analysing
+                top public playlists{" "}
+              </p>
             </div>
           </div>
         </div>

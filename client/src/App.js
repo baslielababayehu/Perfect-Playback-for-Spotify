@@ -13,6 +13,9 @@ import About from "./components/pages/About";
 import Results from "./components/layout/Results";
 import Main from "./components/pages/Main";
 import Spotify from "spotify-web-api-js";
+import PlaylistModal from "../src/components/utils/Modal";
+import { Modal } from "@material-ui/core";
+import MessageModal from "./components/utils/ModalMessage";
 
 const spotifyWebApi = new Spotify();
 
@@ -49,6 +52,7 @@ class App extends Component {
       playlistIsReturned: false,
       disabled: false,
       demo: false,
+      promptLogin: 0,
       //
     };
     if (params.access_token) {
@@ -78,14 +82,14 @@ class App extends Component {
     await spotifyWebApi
       .searchPlaylists(this.state.keyword, { limit: 50 })
       .then((response) => {
-        console.log(response.playlists.items.length);
+        // console.log(response.playlists.items.length);
         let i = 0;
         while (i < response.playlists.items.length) {
           let arr = this.state.arrayWithPlaylistId;
           arr.push(response.playlists.items[i].id);
           i++;
         }
-        console.log(this.state.arrayWithPlaylistId);
+        // console.log(this.state.arrayWithPlaylistId);
       });
     for (let i = 0; i < 50; i++) {
       await spotifyWebApi
@@ -108,7 +112,7 @@ class App extends Component {
       this.setState({
         noOfSongsAnalyzed: this.state.arrayWithTargetPLSongs.length,
       });
-      console.log(this.state.noOfSongsAnalyzed);
+      // console.log(this.state.noOfSongsAnalyzed);
     }
     this.setState({ loading: false });
     this.returnMostPopularSong();
@@ -123,7 +127,7 @@ class App extends Component {
         prev;
 
       arr.sort();
-      console.log(arr);
+      // console.log(arr);
       for (let i = 0; i < arr.length; i++) {
         if (arr[i] !== prev) {
           a.push(arr[i]);
@@ -142,7 +146,7 @@ class App extends Component {
         x++;
       }
 
-      console.log([a, b]);
+      // console.log([a, b]);
     };
     findFrequencyOfItems(
       this.state.arrayWithTargetPLSongs,
@@ -154,7 +158,7 @@ class App extends Component {
       this.state.sortedIdName,
       this.state.sortedIdFreq
     );
-    console.log(this.state.sortedIdName);
+    // console.log(this.state.sortedIdName);
   };
 
   returnMostPopularSong = async () => {
@@ -183,8 +187,8 @@ class App extends Component {
 
     let rankedSongs = [];
     rankedSongs = ranks(this.state.sortedSongFreq);
-    console.log(rankedSongs);
-    console.log(this.state.sortedSongFreq);
+    // console.log(rankedSongs);
+    // console.log(this.state.sortedSongFreq);
 
     const pushPopularSongsToArr = (initRank, endRank) => {
       let index = 0;
@@ -208,8 +212,8 @@ class App extends Component {
       (i) => "spotify:track:" + i
     );
 
-    console.log(this.state.finalSongArray);
-    console.log(this.state.finalIdArray);
+    // console.log(this.state.finalSongArray);
+    // console.log(this.state.finalIdArray);
 
     this.setState({ loading: false });
     this.setState({ playlistIsReturned: true });
@@ -238,8 +242,8 @@ class App extends Component {
           redirect: 0,
         });
       } else {
-        // console.log("please Log in First");
-        // console.log(this.state.access_token);
+        //prompt login
+        await this.setState({ promptLogin: 1 });
       }
 
       // console.log(this.state.redirect);
@@ -249,7 +253,7 @@ class App extends Component {
     spotifyWebApi.getMe().then((response) => {
       this.setState({ username: response.display_name });
       // this.state.username = response.display_name;
-      console.log(this.state.username);
+      // console.log(this.state.username);
     });
   };
 
@@ -280,8 +284,6 @@ class App extends Component {
     });
   };
 
-  setDemoAccount;
-
   render() {
     return (
       <Router>
@@ -289,9 +291,15 @@ class App extends Component {
           <div>
             {this.state.redirect === 1 ? (
               <Redirect to={{ pathname: "/Results" }} />
-            ) : (
-              console.log("dont edirect to playlist")
-            )}
+            ) : null}
+            {this.state.promptLogin === 1 ? (
+              <MessageModal
+                body={"body"}
+                ButtonTitle={"ButtonTitle"}
+                dialogTitle={"dialogTitle"}
+                modalAction={"modalAction"}
+              />
+            ) : null}
             <Switch>
               <Route
                 exact
@@ -337,6 +345,7 @@ class App extends Component {
                 render={() =>
                   this.state.loggedIn ? (
                     <Results
+                      {...this.props}
                       loading={this.state.loading}
                       keyword={this.state.keyword}
                       playlistIsReturned={this.state.playlistIsReturned}
@@ -345,6 +354,7 @@ class App extends Component {
                       loggedIn={this.state.loggedIn}
                       numSongsAnalyzed={this.state.noOfSongsAnalyzed}
                       setDemoAccount={this.setDemoAccount}
+                      username={this.state.username}
                     />
                   ) : (
                     <Redirect to="/" />

@@ -13,13 +13,10 @@ export default function FormDialog(props) {
 
   const handleClickOpen = () => {
     setOpen(true);
-    // props.capturePlaylistName();
   };
 
   const handleClose = () => {
     setOpen(false);
-    props.capturePlaylistName();
-    // console.log(value);
   };
 
   const handleChange = (value) => (e) => {
@@ -27,9 +24,13 @@ export default function FormDialog(props) {
   };
   return (
     <div>
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
+      <button
+        className="btn btn-block btn-sm  my-3 text-white"
+        style={{ backgroundColor: "#1DB954" }}
+        onClick={handleClickOpen}
+      >
         {props.ButtonTitle}
-      </Button>
+      </button>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -51,10 +52,10 @@ export default function FormDialog(props) {
           />
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="black">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} color="black">
             {props.dialogTitle}
           </Button>
         </DialogActions>

@@ -59,7 +59,7 @@ app.get("/login", function (req, res) {
 
   // your application requests authorization
   let scope =
-    "user-read-private user-read-email user-read-playback-state playlist-read-private";
+    "user-read-private user-read-email user-read-playback-state playlist-read-private playlist-modify-private playlist-read-private playlist-modify-public ";
   res.redirect(
     "https://accounts.spotify.com/authorize?" +
       querystring.stringify({
@@ -122,10 +122,10 @@ app.get("/callback", function async(req, res) {
 
         // we can also pass the token to the browser to make requests from there
         res.redirect(
-          "http://localhost:3006/userprofile/#" +
+          "http://localhost:3006/home/#" +
             querystring.stringify({
               access_token: access_token,
-              // refresh_token: refresh_token,
+              refresh_token: refresh_token,
             })
         );
       } else {

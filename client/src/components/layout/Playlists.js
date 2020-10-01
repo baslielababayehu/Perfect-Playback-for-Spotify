@@ -9,5 +9,13 @@ export const Playlists = (props) => {
   //   </div>
   // );
 
-  return props.playlist.map((track) => <PlaylistItems track={track} />);
+  return (
+    <div className="row mx-1 p-0">
+      {props.playlist.map((track) => (
+        <div className="col-auto border border-secondary m-1">
+          <PlaylistItems track={track} />
+        </div>
+      ))}
+    </div>
+  );
 };

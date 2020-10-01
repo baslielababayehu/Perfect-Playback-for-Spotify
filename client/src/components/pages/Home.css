@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css?family=Proxima+Nova&display=swap");
+.main-container {
+  /* height: 100vh; */
+}
 
 .home-background {
   display: flex;
@@ -6,9 +9,10 @@
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-  background-color: #191414;
+  background-color: #221f1f;
   /* background-image: linear-gradient(rgb(26, 30, 34) 0%, rgb(36, 41, 46) 100%); */
-  color: rgb(246, 248, 250);
+  /* color: rgb(246, 248, 250); */
+
   height: 100vh;
 }
 
@@ -26,6 +30,8 @@
   font-family: "Proxima Nova";
   color: rgb(246, 248, 250);
   font-size: 2.5rem;
+  letter-spacing: 1.75px;
+
   margin: 1.5rem 0;
   margin-bottom: 2rem;
 }
@@ -44,6 +50,9 @@
   width: 28rem;
   margin-bottom: 15px;
 }
+.description {
+  font-size: 0.75rem;
+}
 
 /* Resposive */
 @media screen and (max-width: 500px) {
@@ -55,5 +64,11 @@
 
   .home-header {
     font-size: 2rem;
+    letter-spacing: 0.8px;
+  }
+  #description {
+    font-size: 0.75rem;
+    margin-right: 1rem;
+    margin-left: 1rem;
   }
 }
