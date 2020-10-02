@@ -14,10 +14,21 @@ const dotenv = require("dotenv");
 const path = require("path");
 
 dotenv.config();
+
+const whitelist = ["https://https://perfectplayback.herokuapp.com/"];
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 const app = express();
+app.use(cors(whitelist));
 const PORT = process.env.PORT || 5000;
 
-app.use(cors());
 //connect to the Database
 // connectDB();
 
