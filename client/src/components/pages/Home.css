@@ -5,9 +5,6 @@
   -webkit-box-align: center;
   align-items: center;
   background-color: #221f1f;
-  /* background-image: linear-gradient(rgb(26, 30, 34) 0%, rgb(36, 41, 46) 100%); */
-  /* color: rgb(246, 248, 250); */
-
   height: 100vh;
 }
 
@@ -22,7 +19,6 @@
 }
 
 .home-header {
-  /* font-family: "Proxima Nova"; */
   color: rgb(246, 248, 250);
   font-size: 2.5rem;
   letter-spacing: 1.75px;
@@ -32,7 +28,6 @@
 }
 
 .home-input {
-  /* font-family: "Proxima Nova"; */
   letter-spacing: 2px;
   color: white;
   background-color: rgb(53, 55, 56);
@@ -49,7 +44,6 @@
   font-size: 0.75rem;
 }
 
-/* Resposive */
 @media screen and (max-width: 500px) {
   .home-input {
     width: 19rem;

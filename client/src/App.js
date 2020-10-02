@@ -48,6 +48,15 @@ class App extends Component {
 
       finalIDArrayURI: [],
 
+      averageAcousticness: [],
+      averageDancability: [],
+      averageEnergy: [],
+      averageInstrumentalness: [],
+      averageLiveness: [],
+      averageLoudness: [],
+      averageSpeechiness: [],
+      averageValence: [],
+
       loading: false,
       playlistIsReturned: false,
       disabled: false,
@@ -212,25 +221,19 @@ class App extends Component {
       (i) => "spotify:track:" + i
     );
 
-    // console.log(this.state.finalSongArray);
-    // console.log(this.state.finalIdArray);
-
-    this.setState({ loading: false });
-    this.setState({ playlistIsReturned: true });
+    await this.setState({ loading: false });
+    await this.setState({ playlistIsReturned: true });
+    console.log(this.state.finalIdArray);
+    this.getAnalysis();
   };
 
   onEnter = async (e) => {
-    // event.presist();
     if (e.key === "Enter") {
       await this.resetState();
       if (this.state.access_token !== "none") {
         const newKeyword = document.getElementById("home-input").value;
         await this.setState({ keyword: newKeyword });
-        // this.state.keyword = e.target.value;
 
-        // console.log("searching for" + e.target.value);
-        // console.log(this.state.keyword);
-        // this.renderSearch();
         await this.setState({
           redirect: 1,
         });
@@ -245,15 +248,11 @@ class App extends Component {
         //prompt login
         await this.setState({ promptLogin: 1 });
       }
-
-      // console.log(this.state.redirect);
     }
   };
   getuserinfo = () => {
     spotifyWebApi.getMe().then((response) => {
       this.setState({ username: response.display_name });
-      // this.state.username = response.display_name;
-      // console.log(this.state.username);
     });
   };
 
@@ -284,6 +283,31 @@ class App extends Component {
     });
   };
 
+  getAnalysis = () => {
+    console.log(this.state.finalIdArray);
+    let average = (array) => array.reduce((a, b) => a + b) / array.length;
+
+    spotifyWebApi
+      .getAudioFeaturesForTracks(this.state.finalIdArray)
+      .then((response) => {
+        let i = 0;
+        let acousticnessArr = [];
+        let dancability = [];
+        let energy = [];
+        let instrumentalness = [];
+        let liveness = [];
+
+        // console.log(this.state.finalIdArray);
+        console.log(response.audio_features[0].acousticness);
+        while (i < this.state.finalIdArray) {
+          acousticnessArr.push(response.audio_features[i].acousticness);
+          console.log(acousticnessArr);
+          i++;
+        }
+        // this.state.averageAcousticness.push(average(acousticness));
+        console.log(this.state.averageAcousticness);
+      });
+  };
   render() {
     return (
       <Router>
