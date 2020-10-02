@@ -1,3 +1,6 @@
+var globals = {};
+globals.redirect_uri = "";
+
 const express = require("express");
 // const connectDB = require("./config/db");
 const request = require("request");
@@ -31,15 +34,15 @@ const client_id = process.env.REACT_APP_CLIENT_ID; //  client id
 const client_secret = process.env.REACT_APP_CLIENT_SECRET; // client secret
 
 // const getRedirectURI = () => {
-let redirect_uri = "";
+// let redirect_uri = "";
+
 if (process.env.NODE_ENV === "production") {
-  redirect_uri = "/callback"; // redirect uri for production
+  globals.redirect_uri = "/callback"; // redirect uri for production
 } else {
-  redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
+  globals.redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
 }
 // };
 // getRedirectURI()
-console.log(redirect_uri);
 
 // The following code below is adapted from the Spotify API documentation
 
@@ -78,7 +81,7 @@ app.get("/login", cors(), function (req, res) {
         response_type: "code",
         client_id: client_id,
         scope: scope,
-        redirect_uri: redirect_uri,
+        redirect_uri: globals.redirect_uri,
         state: state,
       })
   );
@@ -114,7 +117,7 @@ app.get("/callback", function async(req, res) {
       url: "https://accounts.spotify.com/api/token",
       form: {
         code: code,
-        redirect_uri: redirect_uri,
+        redirect_uri: globals.redirect_uri,
         grant_type: "authorization_code",
       },
       headers: {
