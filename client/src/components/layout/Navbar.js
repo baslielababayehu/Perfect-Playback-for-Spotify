@@ -62,7 +62,7 @@ export const Navbar = (props) => {
                 ) : (
                   <a
                     href={currentURL + "login"}
-                    className="btn btn-block btn-secondary btn-sm"
+                    className="btn btn-block btn-secondary btn-sm mb-2"
                     style={{ backgroundColor: "#1DB954" }}
                   >
                     Log in with Spotify
