@@ -1,6 +1,6 @@
 const express = require("express");
 // const connectDB = require("./config/db");
-const request = require("request"); // "Request" library
+const request = require("request");
 const cors = require("cors");
 const querystring = require("querystring");
 const cookieParser = require("cookie-parser");
@@ -14,6 +14,7 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+app.use(cors());
 //connect to the Database
 // connectDB();
 
@@ -45,9 +46,14 @@ if (process.env.NODE_ENV === "production") {
   //set static folder
   app.use(express.static("client/build"));
 
-  app.get("*", (req, res) =>
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  );
+  //   app.get("*", (req, res) =>
+  //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  //   );
+  const path = require("path");
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  });
 }
 
 // The following code below is adapted from the Spotify API documentation
@@ -74,7 +80,7 @@ const stateKey = "spotify_auth_state";
 
 app.use(express.static("/client/public")).use(cors()).use(cookieParser());
 
-app.get("/login", function (req, res) {
+app.get("/login", cors(), function (req, res) {
   let state = generateRandomString(16);
   res.cookie(stateKey, state);
 

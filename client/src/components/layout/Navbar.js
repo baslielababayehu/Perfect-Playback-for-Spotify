@@ -8,13 +8,14 @@ import axios from "axios";
 export const Navbar = (props) => {
   // console.log(props);
   const goLogin = () => {
-    const currentURL = window.location.href;
-    console.log(window.location.href === "http://localhost:3006/");
-    if (window.location.href === "http://localhost:3006/") {
-      window.location.href = "http://localhost:5000/login";
-    } else {
-      window.location.href = currentURL + "/login";
-    }
+    // const currentURL = window.location.href;
+    // console.log(window.location.href === "http://localhost:3006/");
+    // if (window.location.href === "http://localhost:3006/") {
+    //   window.location.href = "http://localhost:5000/login";
+    // } else {
+    //   window.location.href = currentURL + "/login";
+    // }
+    axios.get("login").then((res) => console.log(res));
   };
   return (
     <div className="text-white pr-3" style={{ backgroundColor: "#221f1f" }}>
