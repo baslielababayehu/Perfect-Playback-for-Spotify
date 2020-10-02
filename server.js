@@ -41,21 +41,6 @@ if (process.env.NODE_ENV === "production") {
 // getRedirectURI()
 console.log(redirect_uri);
 
-// Serve static assets in production
-if (process.env.NODE_ENV === "production") {
-  //set static folder
-  app.use(express.static("client/build"));
-
-  //   app.get("*", (req, res) =>
-  //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  //   );
-  const path = require("path");
-
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname + "/client/build/index.html"));
-  });
-}
-
 // The following code below is adapted from the Spotify API documentation
 
 //----------------------------------------------------------------------------------
@@ -81,23 +66,22 @@ const stateKey = "spotify_auth_state";
 app.use(express.static("/client/public")).use(cors()).use(cookieParser());
 
 app.get("/login", cors(), function (req, res) {
-  res.json({ msg: "Hello World" });
-  // let state = generateRandomString(16);
-  // res.cookie(stateKey, state);
+  let state = generateRandomString(16);
+  res.cookie(stateKey, state);
 
-  // // your application requests authorization
-  // let scope =
-  //   "user-read-private user-read-email user-read-playback-state playlist-read-private playlist-modify-private playlist-read-private playlist-modify-public ";
-  // res.redirect(
-  //   "https://accounts.spotify.com/authorize?" +
-  //     querystring.stringify({
-  //       response_type: "code",
-  //       client_id: client_id,
-  //       scope: scope,
-  //       redirect_uri: redirect_uri,
-  //       state: state,
-  //     })
-  // );
+  // your application requests authorization
+  let scope =
+    "user-read-private user-read-email user-read-playback-state playlist-read-private playlist-modify-private playlist-read-private playlist-modify-public ";
+  res.redirect(
+    "https://accounts.spotify.com/authorize?" +
+      querystring.stringify({
+        response_type: "code",
+        client_id: client_id,
+        scope: scope,
+        redirect_uri: redirect_uri,
+        state: state,
+      })
+  );
 });
 
 app.get("/callback", function async(req, res) {
@@ -222,6 +206,21 @@ app.get("/refresh_token", function (req, res) {
     }
   });
 });
+
+// Serve static assets in production
+if (process.env.NODE_ENV === "production") {
+  //set static folder
+  app.use(express.static("client/build"));
+
+  //   app.get("*", (req, res) =>
+  //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
+  //   );
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "/client/build/index.html"));
+  });
+}
+
 app.listen(PORT);
 
 console.log("Listening on 8888");
