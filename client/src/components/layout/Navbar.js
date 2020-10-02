@@ -7,8 +7,9 @@ import axios from "axios";
 
 export const Navbar = (props) => {
   // console.log(props);
+  const currentURL = window.location.href;
+
   const goLogin = () => {
-    // const currentURL = window.location.href;
     // console.log(window.location.href === "http://localhost:3006/");
     // if (window.location.href === "http://localhost:3006/") {
     //   window.location.href = "http://localhost:5000/login";
@@ -60,9 +61,28 @@ export const Navbar = (props) => {
           <div className="col-12 my-3">
             <div className="row">
               <div className="col-6">
+                {window.location.href === "http://localhost:3006/" ? (
+                  <a
+                    href="http://localhost:5000/login"
+                    // onClick={goLogin}
+                    className="btn btn-block btn-secondary btn-sm"
+                    style={{ backgroundColor: "#1DB954" }}
+                  >
+                    {" "}
+                  </a>
+                ) : (
+                  <a
+                    href={currentURL + "login"}
+                    // onClick={goLogin}
+                    className="btn btn-block btn-secondary btn-sm"
+                    style={{ backgroundColor: "#1DB954" }}
+                  >
+                    Log in with Spotify
+                  </a>
+                )}
                 <a
-                  // href="http://localhost:5000/login"
-                  onClick={goLogin}
+                  href="http://localhost:5000/login"
+                  // onClick={goLogin}
                   className="btn btn-block btn-secondary btn-sm"
                   style={{ backgroundColor: "#1DB954" }}
                 >

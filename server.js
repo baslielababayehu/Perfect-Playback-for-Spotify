@@ -1,5 +1,5 @@
 var globals = {};
-globals.redirect_uri = "";
+globals.redirect_uri = "/callback";
 
 const express = require("express");
 // const connectDB = require("./config/db");
@@ -47,11 +47,11 @@ const client_secret = process.env.REACT_APP_CLIENT_SECRET; // client secret
 // const getRedirectURI = () => {
 // let redirect_uri = "";
 
-if (process.env.NODE_ENV === "production") {
-  globals.redirect_uri = "/callback"; // redirect uri for production
-} else {
-  globals.redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
-}
+// if (process.env.NODE_ENV === "production") {
+//   globals.redirect_uri = "/callback"; // redirect uri for production
+// } else {
+//   globals.redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
+// }
 // };
 // getRedirectURI()
 
