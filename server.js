@@ -1,5 +1,5 @@
 var globals = {};
-globals.redirect_uri = "/callback";
+globals.redirect_uri = "https://perfectplayback.herokuapp.com/callback";
 
 const express = require("express");
 // const connectDB = require("./config/db");
