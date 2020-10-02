@@ -6,9 +6,6 @@
   align-items: flex-end;
   justify-content: flex-start;
   background-color: #191414;
-  /* background-image: linear-gradient(white 0%, #1db954);
-  color: rgb(246, 248, 250); */
-  /* height: 100vh; */
 }
 .ul {
   display: inline;
@@ -23,7 +20,6 @@
     font-size: 1.5rem;
   }
   .title {
-    /* width: 19rem; */
     font-size: 1rem;
     letter-spacing: 1px;
   }

@@ -7,6 +7,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
 export function MessageModal(props) {
+  const currentURL = window.location.href;
+
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -33,7 +35,7 @@ export function MessageModal(props) {
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
             You are currently not logged into Spotify. Don't have spotify? Get
-            it <a href="https://www.spotify.com/">here</a>
+            it <a href="https://www.spotify.com/">here</a>.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -45,9 +47,23 @@ export function MessageModal(props) {
             onClick={handleClose}
             style={{ backgroundColor: "#1db954", color: "white" }}
           >
-            <a href="http://localhost:5000/login" className="text-white">
-              Login
-            </a>
+            {window.location.href === "http://localhost:3006/" ? (
+              <a
+                href="http://localhost:5000/login"
+                className="btn btn-block  btn-sm"
+                style={{ backgroundColor: "#1DB954" }}
+              >
+                Login
+              </a>
+            ) : (
+              <a
+                href={currentURL + "login"}
+                className="btn btn-block btn-secondary btn-sm"
+                style={{ backgroundColor: "#1DB954" }}
+              >
+                Log
+              </a>
+            )}
           </Button>
         </DialogActions>
       </Dialog>

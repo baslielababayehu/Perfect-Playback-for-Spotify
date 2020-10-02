@@ -14,10 +14,6 @@ export class Results extends Component {
     super(props);
   }
 
-  componentDidMount() {
-    console.log(this.props);
-  }
-
   render() {
     // return <div>yessir</div>;
     return (
@@ -34,7 +30,7 @@ export class Results extends Component {
         (this.props.loading || this.props.playlistIsReturned) ? (
           <Fragment>
             <Spinner />
-            <h2>
+            <h2 className="text-center">
               Analyzing {this.props.numSongsAnalyzed} songs from target
               playlists
             </h2>

@@ -4,10 +4,13 @@ import { Radar } from "react-chartjs-2";
 const data = {
   labels: [
     "Dancability",
-    "Acousticness",
     "energy",
-    "instrumentalness",
+    "key",
+    "loudness",
+    "mode",
     "speechiness",
+    "acousticness",
+    "instrumentalness",
   ],
   datasets: [
     {
@@ -26,8 +29,10 @@ const data = {
 export const RadarPlaylist = () => {
   return (
     <div>
-      <h2>Playlist Stats</h2>
-      <p>The playlist created for you has the following attributes.</p>
+      <h2 className="ml-2">Playlist Stats</h2>
+      <p className="ml-2">
+        The playlist created for you has the following attributes.
+      </p>
       <div
         className="row"
         style={{
@@ -37,7 +42,10 @@ export const RadarPlaylist = () => {
           alignItems: "center",
         }}
       >
-        <div className="col-6" style={{ backgroundColor: "white" }}>
+        <div
+          className="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6"
+          style={{ backgroundColor: "white" }}
+        >
           <Radar data={data} />
         </div>
       </div>

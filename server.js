@@ -1,5 +1,6 @@
 var globals = {};
-globals.redirect_uri = "https://perfectplayback.herokuapp.com/callback/";
+// globals.redirect_uri = "https://perfectplayback.herokuapp.com/callback/";
+globals.redirect_uri = "http://localhost:5000/callback";
 
 const express = require("express");
 // const connectDB = require("./config/db");
@@ -15,18 +16,7 @@ const path = require("path");
 
 dotenv.config();
 
-const whitelist = ["https://https://perfectplayback.herokuapp.com/"];
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-};
 const app = express();
-app.use(cors(whitelist));
 const PORT = process.env.PORT || 5000;
 
 //connect to the Database
@@ -43,17 +33,6 @@ const PORT = process.env.PORT || 5000;
 console.log(process.env.REACT_APP_CLIENT_ID);
 const client_id = process.env.REACT_APP_CLIENT_ID; //  client id
 const client_secret = process.env.REACT_APP_CLIENT_SECRET; // client secret
-
-// const getRedirectURI = () => {
-// let redirect_uri = "";
-
-// if (process.env.NODE_ENV === "production") {
-//   globals.redirect_uri = "/callback"; // redirect uri for production
-// } else {
-//   globals.redirect_uri = "http://localhost:5000/callback"; //  redirect uri for dev
-// }
-// };
-// getRedirectURI()
 
 // The following code below is adapted from the Spotify API documentation
 
@@ -225,10 +204,6 @@ app.get("/refresh_token", function (req, res) {
 if (process.env.NODE_ENV === "production") {
   //set static folder
   app.use(express.static("client/build"));
-
-  //   app.get("*", (req, res) =>
-  //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"))
-  //   );
 
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname + "/client/build/index.html"));

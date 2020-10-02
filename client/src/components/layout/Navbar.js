@@ -2,22 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaSpotify } from "react-icons/fa";
 import "./Navbar.css";
-import { Button } from "@material-ui/core";
-import axios from "axios";
+import Button from "@material-ui/core/Button";
+import Tooltip from "@material-ui/core/Tooltip";
 
 export const Navbar = (props) => {
-  // console.log(props);
-  const currentURL = window.location.href;
+  const currentURL = "https://perfectplayback.herokuapp.com/";
 
-  const goLogin = () => {
-    // console.log(window.location.href === "http://localhost:3006/");
-    // if (window.location.href === "http://localhost:3006/") {
-    //   window.location.href = "http://localhost:5000/login";
-    // } else {
-    //   window.location.href = currentURL + "/login";
-    // }
-    axios.get("login").then((res) => console.log(res));
-  };
   return (
     <div className="text-white pr-3" style={{ backgroundColor: "#221f1f" }}>
       <div className="row p-0 m-0 pt-2">
@@ -52,7 +42,7 @@ export const Navbar = (props) => {
                 style={{ display: "inline" }}
                 className="ml-4 text-warning nav-item login"
               >
-                Not Logged in
+                Logged Out
               </li>
             )}
           </ul>
@@ -60,42 +50,36 @@ export const Navbar = (props) => {
         {props.loggedIn ? null : (
           <div className="col-12 my-3">
             <div className="row">
-              <div className="col-6">
+              <div className=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
                 {window.location.href === "http://localhost:3006/" ? (
                   <a
                     href="http://localhost:5000/login"
-                    // onClick={goLogin}
-                    className="btn btn-block btn-secondary btn-sm"
+                    className="btn btn-block btn-secondary btn-sm mt-1 mb-2"
                     style={{ backgroundColor: "#1DB954" }}
                   >
-                    {" "}
+                    Log in with Spotify
                   </a>
                 ) : (
                   <a
                     href={currentURL + "login"}
-                    // onClick={goLogin}
                     className="btn btn-block btn-secondary btn-sm"
                     style={{ backgroundColor: "#1DB954" }}
                   >
                     Log in with Spotify
                   </a>
                 )}
-                <a
-                  href="http://localhost:5000/login"
-                  // onClick={goLogin}
-                  className="btn btn-block btn-secondary btn-sm"
-                  style={{ backgroundColor: "#1DB954" }}
-                >
-                  Log in with Spotify
-                </a>
               </div>
-              <div className="col-6">
-                <button
-                  className="btn btn-secondary btn-sm btn-block "
-                  onClick={props.setDemoAccount}
-                >
-                  Use Basliel's account as a demo
-                </button>
+              <div className=" col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 ">
+                <Tooltip title="This feature is not yet available">
+                  <span>
+                    <Button
+                      disabled
+                      className="btn btn-secondary btn-block btn-sm text-white"
+                    >
+                      Use Demo Account
+                    </Button>
+                  </span>
+                </Tooltip>
               </div>
             </div>
           </div>
@@ -107,7 +91,6 @@ export const Navbar = (props) => {
 
 Navbar.defaultProps = {
   title: "Perfect Playback",
-  // icon: "fa fa-linkedin",
 };
 
 export default Navbar;
